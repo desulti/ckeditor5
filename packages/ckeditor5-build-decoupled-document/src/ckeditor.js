@@ -40,6 +40,34 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices';
+import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
+import imagePencil from '@ckeditor/ckeditor5-core/theme/icons/pencil.svg';
+
+import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+
+class SaveButton extends Plugin {
+    init() {
+        const editor = this.editor;
+
+        editor.ui.componentFactory.add( 'saveArticle', locale => {
+            const view = new ButtonView( locale );
+
+            view.set( {
+                label: 'Save article',
+                icon: imagePencil,
+                tooltip: true
+            } );
+
+            // Callback executed once the image is clicked.
+            view.on( 'execute', () => {
+				alert('Save');
+                // const imageURL = prompt( 'Image URL' );
+            } );
+
+            return view;
+        } );
+    }
+}
 
 export default class DecoupledEditor extends DecoupledEditorBase {}
 
@@ -78,7 +106,8 @@ DecoupledEditor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
-	TextTransformation
+	TextTransformation,
+	SaveButton
 ];
 
 // Editor configuration.
@@ -87,15 +116,15 @@ DecoupledEditor.defaultConfig = {
 		items: [
 			'heading',
 			'|',
-			'fontfamily',
+			//'fontfamily',
 			'fontsize',
-			'fontColor',
+			// 'fontColor',
 			'fontBackgroundColor',
 			'|',
 			'bold',
-			'italic',
+			//'italic',
 			'underline',
-			'strikethrough',
+			// 'strikethrough',
 			'|',
 			'alignment',
 			'|',
@@ -106,10 +135,11 @@ DecoupledEditor.defaultConfig = {
 			'indent',
 			'|',
 			'link',
-			'blockquote',
+			// 'blockquote',
 			'uploadImage',
 			'insertTable',
-			'mediaEmbed',
+			'saveArticle',
+			//'mediaEmbed',
 			'|',
 			'undo',
 			'redo'
